@@ -25,7 +25,7 @@ class MLP( torch.nn.Module) :
       self.layers.append( nonlin())
       self.layers.append( torch.nn.Dropout( p = dropout_rate))
     
-    self.layers.append( torch.nn.Linear( dim_out, dim_out))
+    self.layers.append( torch.nn.Linear( dim_hidden, dim_out))
     self.layers.append( nonlin())
 
   #####################
@@ -34,7 +34,7 @@ class MLP( torch.nn.Module) :
     # cache for skip connection
     x_in = x
 
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     for layer in self.layers :
       x = layer( x)
 
