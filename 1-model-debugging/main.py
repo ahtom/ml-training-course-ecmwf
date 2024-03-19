@@ -1,8 +1,5 @@
 
-import os
-import code
 import torch
-
 
 from model import MLP
 from dataset import CustomDataSet
@@ -17,7 +14,19 @@ if __name__ == '__main__' :
   device = 'cuda' if torch.cuda.is_available() else 'cpu'
   net = net.to(device)
 
-  t_in = torch.rand( (16, 256)).to(device)
-  t_out = net( t_in)
+  custom_dataset = CustomDataSet( len=32768, batch_size=128, dim_data=512)
+  data_iter = iter(custom_dataset)
 
-  
+  lossfct = torch.nn.MSELoss()
+
+  # load sample
+  (source, target) = next(data_iter)
+  source, target = source.to(device), target.to(device)
+  # evaluate network
+  pred = net( source)
+
+  loss = lossfct( pred, target)
+
+  # compute loss
+  # idx = torch.arange( 512)
+  # loss = lossfct( pred[idx], target[idx])

@@ -11,6 +11,8 @@ class CustomDataSet( torch.utils.data.IterableDataset):
     self.len = len
     self.batch_size = batch_size
     self.dim_data = dim_data
+    self.num_chs_in = 4
+    self.num_chs_out = 5
 
   #####################
   def __iter__(self):
@@ -19,10 +21,12 @@ class CustomDataSet( torch.utils.data.IterableDataset):
 
     for _ in range( iter_start, iter_end, self.batch_size) :
 
-      batch = torch.rand( self.batch_size, self.dim_data)
-      target = torch.rand( self.batch_size, self.dim_data)
+      # source = torch.rand( self.batch_size, self.num_chs_in, self.dim_data)
+      # target = torch.rand( self.batch_size, self.num_chs_in, self.dim_data)
+      source = torch.ones( self.batch_size, self.num_chs_in, self.dim_data)
+      target = torch.ones( self.batch_size, self.num_chs_in, self.dim_data)
 
-      yield (batch, target)
+      yield (source, target)
 
   #####################
   def __len__(self):

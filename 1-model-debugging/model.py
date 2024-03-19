@@ -5,6 +5,7 @@ class MLP( torch.nn.Module) :
 
   #####################
   def __init__( self, dim_in, dim_out, num_layers = 2, hidden_factor = 2,
+                chs_in = 4, chs_out = 5,
                 dropout_rate = 0., nonlin = torch.nn.GELU) :
  
     super( MLP, self).__init__()
@@ -28,14 +29,15 @@ class MLP( torch.nn.Module) :
     self.layers.append( torch.nn.Linear( dim_hidden, dim_out))
     self.layers.append( nonlin())
 
+    self.merge_channels = torch.nn.Linear(chs_in, chs_out)
+
   #####################
   def forward( self, x) :
-
-    # cache for skip connection
-    x_in = x
 
     # import pdb; pdb.set_trace()
     for layer in self.layers :
       x = layer( x)
 
-    return x + x_in
+    self.merge_channels( x.transpose( -2, -1)).transpose( -2, -1)
+
+    return x
