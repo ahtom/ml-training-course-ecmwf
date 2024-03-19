@@ -1,4 +1,5 @@
 
+import code
 import torch
 
 class MLP( torch.nn.Module) :
@@ -34,10 +35,11 @@ class MLP( torch.nn.Module) :
   #####################
   def forward( self, x) :
 
-    # import pdb; pdb.set_trace()
+    x_in = x
+
     for layer in self.layers :
       x = layer( x)
 
-    self.merge_channels( x.transpose( -2, -1)).transpose( -2, -1)
+    x = self.merge_channels( x.transpose( -2, -1)).transpose( -2, -1)
 
-    return x
+    return x + x_in

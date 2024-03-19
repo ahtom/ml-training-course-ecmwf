@@ -21,10 +21,8 @@ class CustomDataSet( torch.utils.data.IterableDataset):
 
     for _ in range( iter_start, iter_end, self.batch_size) :
 
-      # source = torch.rand( self.batch_size, self.num_chs_in, self.dim_data)
-      # target = torch.rand( self.batch_size, self.num_chs_in, self.dim_data)
-      source = torch.ones( self.batch_size, self.num_chs_in, self.dim_data)
-      target = torch.ones( self.batch_size, self.num_chs_in, self.dim_data)
+      source = torch.rand( self.batch_size, self.num_chs_in, self.dim_data)
+      target = torch.rand( self.batch_size, self.num_chs_in, self.dim_data)
 
       yield (source, target)
 
